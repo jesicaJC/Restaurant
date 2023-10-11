@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 import modelo.Pedido;/**
  *
@@ -25,7 +27,7 @@ public class PedidoData {
     
     public void agregarPedido(Pedido pedi){ 
     
-    String sql = "INSERT INTO pedido (id_Pedido,id_Mesa,nombre_Mesero, fecha_Hora, importe, cobrada) VALUES (?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO pedido (id_Pedido,id_mesa,nombre_mesero, fecha_hora, importe, cobro) VALUES (?, ?, ?, ?, ?, ?)";
     
     try {
             //preparedStatement envian la setencia anterior
@@ -36,7 +38,7 @@ public class PedidoData {
             ps.setString(3, pedi.getNombreMesero());
 //          LocalDate lc = alumnoActual.getFechaNacimiento();
 //          java.util.Date date = java.util.Date.from(lc.atStartOfDay(ZoneId.systemDefault()).toInstant());
-//            ps.setDate(4, Date.valueOf(pedi));
+            ps.setDate(4, Date.valueOf(pedi.getFechaHora()));
             ps.setDouble(5, pedi.getImporte());
             ps.setBoolean(6, pedi.isCobro());
             ps.executeUpdate();
@@ -92,4 +94,6 @@ public class PedidoData {
 //            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pedido: " + ex.getMessage());
 //        }
 //        }
+
+    
 }

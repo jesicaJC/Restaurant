@@ -69,7 +69,7 @@ private DefaultTableModel modelo = new DefaultTableModel();
         jtPrecio = new javax.swing.JTextField();
         jtCantidad = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTableProductos = new javax.swing.JTable();
+        jTableProducto = new javax.swing.JTable();
         jbModificar = new javax.swing.JButton();
         jbAgregar = new javax.swing.JButton();
         jbEliminar = new javax.swing.JButton();
@@ -286,7 +286,7 @@ private DefaultTableModel modelo = new DefaultTableModel();
             }
         });
 
-        jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
+        jTableProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -297,12 +297,12 @@ private DefaultTableModel modelo = new DefaultTableModel();
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTableProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableProductosMouseClicked(evt);
+                jTableProductoMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTableProductos);
+        jScrollPane2.setViewportView(jTableProducto);
 
         jbModificar.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
         jbModificar.setText("Modificar");
@@ -538,7 +538,7 @@ try{
     }//GEN-LAST:event_jbAgregarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-        int filasSelec=jTableProductos.getSelectedRow();
+        int filasSelec=jTableProducto.getSelectedRow();
         if(filasSelec != -1){
             int idM = (Integer)modelo.getValueAt(filasSelec, 0);
             prodata.eliminarProducto(idM);
@@ -594,8 +594,8 @@ try{
             }
     }//GEN-LAST:event_jtNombreBuscarKeyReleased
 
-    private void jTableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductosMouseClicked
-         int fsec=jTableProductos.getSelectedRow();
+    private void jTableProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductoMouseClicked
+         int fsec=jTableProducto.getSelectedRow();
           if(fsec != -1){
              jtID.setText(modelo.getValueAt(fsec, 0).toString());//pongo un integer porque quiero pasarlo de Object a entero
              jtNombreBuscar.setText(modelo.getValueAt(fsec, 1).toString());
@@ -603,7 +603,7 @@ try{
              jtCantidad.setText(modelo.getValueAt(fsec, 3).toString()); 
 //             jrbEstado.setSelected(modelo.getValueAt(fsec, 4));
 //              
-    }//GEN-LAST:event_jTableProductosMouseClicked
+    }//GEN-LAST:event_jTableProductoMouseClicked
 
     }
     
@@ -668,7 +668,7 @@ try{
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTableProdu;
-    private javax.swing.JTable jTableProductos;
+    private javax.swing.JTable jTableProducto;
     private javax.swing.JButton jbAgregar;
     private javax.swing.JButton jbConsultar;
     private javax.swing.JButton jbEliminar;
@@ -695,7 +695,7 @@ private void armarCabecera(){
  for(Object tit:titulo){
  modelo.addColumn(tit);
  }
- jTableProductos.setModel(modelo);
+ jTableProducto.setModel(modelo);
  
   }
 
@@ -724,7 +724,7 @@ private void llenarTabla(){
        
     }
 private void borrarFilas(){
-  int filas=jTableProductos.getRowCount()-1;
+  int filas=jTableProducto.getRowCount()-1;
   for(;filas>=0;filas--){
   modelo.removeRow(filas);
   }
