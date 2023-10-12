@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import modelo.Mesa;
 import modelo.Pedido;
+import modelo.PedidoProducto;
 import modelo.Producto;
 
 
@@ -73,18 +74,18 @@ public class Restaurant {
 // if( mesaEncontrado != null){
 //System.out.println(mesaEncontrado.toString());
 
- //LISYTAR MESA
-//        Mesa mesa = new Mesa();
-//        MesaData medata = new MesaData();//Guarda en la base
-//
-//        for (Mesa me : medata.listarMesa()) {
-//            System.out.println(me.toString());
-//        }
+// LISTAR MESA
+        Mesa mesa = new Mesa();
+        MesaData medata = new MesaData();//Guarda en la base
+
+        for (Mesa me : medata.listarMesa()) {
+            System.out.println(me.toString());
+        }
 //-------------------------------------------------------------------------------
                  //AGREGAR PEDIDO
-   Pedido pedido = new Pedido( 2, "Paco", LocalDate.of(2023, 10, 11), 1000, true);
-   PedidoData pedata = new PedidoData();//Guarda en la base
-   pedata.agregarPedido(pedido);
+//   Pedido pedido = new Pedido( 2, "Paco", LocalDate.of(2023, 10, 11), 1000, true);
+//   PedidoData pedata = new PedidoData();//Guarda en la base
+//   pedata.agregarPedido(pedido);
 
 
 //ELIMINA PRODUCTO
@@ -107,7 +108,8 @@ public class Restaurant {
 //}
  
 
-
+        PedidoProducto p = new PedidoProducto(1, 1, 2);
+        System.out.println(p.toString());
 
 
 
