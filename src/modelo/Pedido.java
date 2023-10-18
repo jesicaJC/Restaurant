@@ -1,6 +1,7 @@
 
 package modelo;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -12,23 +13,30 @@ public class Pedido {
    private int idPedido;
    private int idMesa;
    private String nombreMesero;
-   private LocalDate fechaHora;
+   private Timestamp fechaHora;
    private double importe;
    private boolean cobro;
 
     public Pedido() {
     }
 
-    public Pedido(int idPedido, int idMesa, String nombreMesero, LocalDate fechaHora, double importe, boolean cobro) {
-        this.idPedido = idPedido;
+    public Pedido(int idMesa, String nombreMesero, double importe, boolean cobro) {
         this.idMesa = idMesa;
         this.nombreMesero = nombreMesero;
-        this.fechaHora = fechaHora;
         this.importe = importe;
         this.cobro = cobro;
     }
 
-    public Pedido(int idMesa, String nombreMesero, LocalDate fechaHora, double importe, boolean cobro) {
+    
+    public Pedido(int idPedido, int idMesa, String nombreMesero, double importe, boolean cobro) {
+        this.idPedido = idPedido;
+        this.idMesa = idMesa;
+        this.nombreMesero = nombreMesero;
+        this.importe = importe;
+        this.cobro = cobro;
+    }
+
+    public Pedido(int idMesa, String nombreMesero, Timestamp fechaHora, double importe, boolean cobro) {
         this.idMesa = idMesa;
         this.nombreMesero = nombreMesero;
         this.fechaHora = fechaHora;
@@ -60,13 +68,15 @@ public class Pedido {
         this.nombreMesero = nombreMesero;
     }
 
-    public LocalDate getFechaHora() {
+    public Timestamp getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(LocalDate fechaHora) {
+    public void setFechaHora(Timestamp fechaHora) {
         this.fechaHora = fechaHora;
     }
+
+    
 
     public double getImporte() {
         return importe;
@@ -86,7 +96,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return "Pedido{" + "idPedido=" + idPedido + ", idMesa=" + idMesa + ", nombreMesero=" + nombreMesero + ", fechaHora=" + fechaHora + ", importe=" + importe + ", cobro=" + cobro + '}';
+        return "idPedido: " + idPedido + ", idMesa:" + idMesa + ", nombreMesero:" + nombreMesero + ", fechaHora:" + fechaHora + ", importe:" + importe + ", cobro=" + cobro + '}';
     }
    
    

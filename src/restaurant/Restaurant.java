@@ -3,8 +3,9 @@ package restaurant;
 
 import AceesoDatos.*;
 import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import modelo.Mesa;
@@ -74,42 +75,50 @@ public class Restaurant {
 // if( mesaEncontrado != null){
 //System.out.println(mesaEncontrado.toString());
 
-// LISTAR MESA
-        Mesa mesa = new Mesa();
-        MesaData medata = new MesaData();//Guarda en la base
-
-        for (Mesa me : medata.listarMesa()) {
-            System.out.println(me.toString());
-        }
+//// LISTAR MESA
+//        Mesa mesa = new Mesa();
+//        MesaData medata = new MesaData();//Guarda en la base
+//
+//        for (Mesa me : medata.listarMesa()) {
+//            System.out.println(me.toString());
+//        }
 //-------------------------------------------------------------------------------
                  //AGREGAR PEDIDO
-//   Pedido pedido = new Pedido( 2, "Paco", LocalDate.of(2023, 10, 11), 1000, true);
-//   PedidoData pedata = new PedidoData();//Guarda en la base
+   Pedido pedido = new Pedido( 1, "Paco", 200, true);
+   PedidoData pedata = new PedidoData();//Guarda en la base
 //   pedata.agregarPedido(pedido);
 
+              //LISTAR PEDIDOS
+//        Pedido pedi = new Pedido();
+//        for (Pedido pe : pedata.listarPedido()) {
+//            System.out.println(pe.toString());
+//        }
+   
+             //ELIMINAR PEDIDO
+//      pedata.borrarPedido(6);
+   
 
-//ELIMINA PRODUCTO
-//Producto producto1 = new Producto(2,"Pizza", 2000, 10, true);
-//ProductoData produData = new ProductoData();//Guarda en la base
-//produData.eliminarProducto(2);
+            //MODIFICA MESA
+//       Pedido pedi = new Pedido( 5, 2, "Laura", 2500, true);
+//       pedata.modificarPedido(pedi);
+       
+//------------------------------------------------------------------------------
 
-// MODIFICA PRODUCTO
-//Producto producto1 = new Producto(2,"Pizza con Morrones", 2000, 10, true);
-//ProductoData produData = new ProductoData();//Guarda en la base
-//produData.modificarProducto(producto1); 
+          //LISTAR PEDIDOS POR MESERO
+        PedidoProductoData pp = new PedidoProductoData();
+//         pp.listarPedidoporMesero("Laura");
 
-//BUSCAR POR ID
-//ProductoData produData = new ProductoData();//Guarda en la base
-//Producto productoEncontrado = produData.buscarProducto(1);
-// if(productoEncontrado != null){
-//System.out.println("Nombre producto: "+ productoEncontrado.getNombreProducto());
-//System.out.println("Precio $"+ productoEncontrado.getPrecio());
-//System.out.println("Stock: "+ productoEncontrado.getStock());
-//}
- 
-
-        PedidoProducto p = new PedidoProducto(1, 1, 2);
-        System.out.println(p.toString());
+         //LISTAR PEDIDOS POR INGRESO TOTAL
+         pp.listarIgresoTotalXFecha(Timestamp.valueOf("2023-10-12 17:43:09"));
+        
+        
+        
+        
+        
+        
+//       PedidoProducto p = new PedidoProducto(1, 1, 2);
+//        System.out.println(p.toString());
+        
 
 
 
@@ -119,13 +128,13 @@ public class Restaurant {
 //        System.out.println(r);
 //        
 //        
-//        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+////        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+////        String resultado = formato.format(r);
+////        System.out.println(resultado);
+////        
+//        
+//        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm:ss");
 //        String resultado = formato.format(r);
-//        System.out.println(resultado);
-//        
-//        
-//         formato = DateTimeFormatter.ofPattern("dd MMMM yyyy, HH:mm:ss");
-//        resultado = formato.format(r);
 //        System.out.println(resultado);
     }
     
