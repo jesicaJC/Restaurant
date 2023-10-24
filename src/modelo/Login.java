@@ -11,20 +11,19 @@ package modelo;
  */
 public class Login {
     private int id;
-    private String nombre,usuario,pass;
+    private String usuario,pass;
 
     public Login() {
     }
 
-    public Login(int id, String nombre, String usuario, String pass) {
+    public Login(int id, String usuario, String pass) {
         this.id = id;
-        this.nombre = nombre;
+       
         this.usuario = usuario;
         this.pass = pass;
     }
 
-    public Login(String nombre, String usuario, String pass) {
-        this.nombre = nombre;
+    public Login( String usuario, String pass) {
         this.usuario = usuario;
         this.pass = pass;
     }
@@ -35,14 +34,6 @@ public class Login {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getUsuario() {
@@ -63,7 +54,7 @@ public class Login {
 
     @Override
     public String toString() {
-        return "Login{" + "id=" + id + ", nombre=" + nombre + ", usuario=" + usuario + ", pass=" + pass + '}';
+        return "Login{" + "id=" + id  + ", usuario=" + usuario + ", pass=" + pass + '}';
     }
     
     

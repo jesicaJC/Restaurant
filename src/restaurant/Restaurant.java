@@ -12,12 +12,19 @@ import modelo.Mesa;
 import modelo.Pedido;
 import modelo.PedidoProducto;
 import modelo.Producto;
+import vistas.Sistema;
+import vistas.VistaLogin;
 
 
 public class Restaurant {
 
    
     public static void main(String[] args) {
+//         VistaLogin vl = new VistaLogin();
+//         vl.setVisible(true);
+//         vl.setLocationRelativeTo(null);     
+        
+        
        //Agregar productos   
 //Producto producto1 = new Producto("Pizza", 2000, 10, true);
 //ProductoData produData = new ProductoData();//Guarda en la base
@@ -84,15 +91,17 @@ public class Restaurant {
 //        }
 //-------------------------------------------------------------------------------
                  //AGREGAR PEDIDO
-   Pedido pedido = new Pedido( 1, "Paco", 200, true);
-   PedidoData pedata = new PedidoData();//Guarda en la base
-//   pedata.agregarPedido(pedido);
-
-              //LISTAR PEDIDOS
+//   Pedido pedido = new Pedido( 1, "Paco", 200, true);
+//   PedidoData pedata = new PedidoData();//Guarda en la base
+////   pedata.agregarPedido(pedido);
+//
+//              //LISTAR PEDIDOS
 //        Pedido pedi = new Pedido();
 //        for (Pedido pe : pedata.listarPedido()) {
-//            System.out.println(pe.toString());
+////            System.out.println(pe.toString());
 //        }
+        
+        
    
              //ELIMINAR PEDIDO
 //      pedata.borrarPedido(6);
@@ -107,22 +116,19 @@ public class Restaurant {
           //LISTAR PEDIDOS POR MESERO
         PedidoProductoData pp = new PedidoProductoData();
 //         pp.listarPedidoporMesero("Laura");
-
+         System.out.println("   ");
          //LISTAR PEDIDOS POR INGRESO TOTAL
-         pp.listarIgresoTotalXFecha(Timestamp.valueOf("2023-10-12 17:43:09"));
+//         pp.listarIgresoTotalXFecha(Timestamp.valueOf("2023-10-12 17:43:09"));
+        System.out.println("   ");
+        //LISTAR PEDIDOS COBRADO POR MESERO X DIA
+//        pp.listarPedidoCobroMeseroDia("Laura");
+        System.out.println("   ");
+        //LISTAR PEDIDOS X FECHA HORA
         
-        
-        
-        
-        
-        
+     
+
 //       PedidoProducto p = new PedidoProducto(1, 1, 2);
 //        System.out.println(p.toString());
-        
-
-
-
-  
     
 //        LocalDateTime r = LocalDateTime.now();
 //        System.out.println(r);

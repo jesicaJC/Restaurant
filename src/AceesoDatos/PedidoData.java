@@ -96,6 +96,9 @@ public class PedidoData {
     public List<Pedido> listarPedido() {
         List<Pedido> pedidos = new ArrayList<>();
         try {
+//           String sql = "SELECT *"
+//           +" FROM pedido,mesa"
+//           +" WHERE  pedido.id_pedido=mesa.id_mesa and cobro = 1";
             String sql = "SELECT * FROM pedido WHERE cobro = 1";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

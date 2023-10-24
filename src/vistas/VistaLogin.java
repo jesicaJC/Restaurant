@@ -32,10 +32,9 @@ public class VistaLogin extends javax.swing.JFrame {
         jpContrasenia = new javax.swing.JPasswordField();
         jbIniciar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jbRegistrarse = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -67,8 +66,13 @@ public class VistaLogin extends javax.swing.JFrame {
         jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\rafa\\Downloads\\contrasena (2).png")); // NOI18N
         jLabel5.setText("jLabel5");
 
-        jButton1.setFont(new java.awt.Font("Courier New", 1, 12)); // NOI18N
-        jButton1.setText("Registrase");
+        jbRegistrarse.setFont(new java.awt.Font("Courier New", 1, 12)); // NOI18N
+        jbRegistrarse.setText("Registrase");
+        jbRegistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRegistrarseActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Si es la primera vez que ingresa registrese ");
 
@@ -92,7 +96,7 @@ public class VistaLogin extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(125, 125, 125)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
+                            .addComponent(jbRegistrarse)
                             .addComponent(jbIniciar)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(80, 80, 80)
@@ -117,7 +121,7 @@ public class VistaLogin extends javax.swing.JFrame {
                 .addGap(71, 71, 71)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(jbRegistrarse)
                 .addContainerGap(106, Short.MAX_VALUE))
         );
 
@@ -125,37 +129,27 @@ public class VistaLogin extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
-        jLabel2.setFont(new java.awt.Font("Vivaldi", 1, 48)); // NOI18N
-        jLabel2.setText("Mi");
-
         jLabel6.setFont(new java.awt.Font("Vivaldi", 1, 48)); // NOI18N
-        jLabel6.setText("Restaurant");
+        jLabel6.setText("Restó");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(jLabel2)))
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addGap(79, 79, 79)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(318, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(228, 228, 228)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(266, 266, 266)
                 .addComponent(jLabel6)
-                .addContainerGap(338, Short.MAX_VALUE))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\rafa\\Pictures\\resto900.jpg")); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, 600, -1));
@@ -170,6 +164,27 @@ public class VistaLogin extends javax.swing.JFrame {
     private void jbIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIniciarActionPerformed
         validar();
     }//GEN-LAST:event_jbIniciarActionPerformed
+
+    private void jbRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarseActionPerformed
+         try{
+             
+        String usuario = jtUsuario.getText();
+        String pass = String.valueOf(jpContrasenia.getPassword());
+        
+        if(!"".equals(usuario) || !"".equals(pass)){
+            Login log = new Login(usuario, pass);
+             lodata.agregarUsuario(log);
+        }else{
+          JOptionPane.showMessageDialog(this, "no puede estar vacio ");
+        }
+           
+        
+       
+           
+       }catch(NumberFormatException ex){
+     JOptionPane.showMessageDialog(this, "Debe ingresar ");
+    }
+    }//GEN-LAST:event_jbRegistrarseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,9 +223,7 @@ public class VistaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -219,27 +232,47 @@ public class VistaLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbIniciar;
+    private javax.swing.JButton jbRegistrarse;
     private javax.swing.JPasswordField jpContrasenia;
     private javax.swing.JTextField jtUsuario;
     // End of variables declaration//GEN-END:variables
 
 public void validar(){
-String usuario = jtUsuario.getText();
-String pass = String.valueOf(jpContrasenia.getPassword());
+        String usuario = jtUsuario.getText();
+        String pass = String.valueOf(jpContrasenia.getPassword());
+        
+        try{
+        if (!"".equals(usuario) && !"".equals(pass)) {
+        log = lodata.logearse(usuario, pass);
+        System.out.println("> " + log);
 
-if(!"".equals(usuario) || !"".equals(pass)){
-    log = lodata.log(usuario, pass);
-    if(log.getUsuario()!=null && log.getPass() != null){
-//        JOptionPane.showMessageDialog(this, "Bienvenido");
-        Sistema sis = new Sistema();
-        sis.setVisible(true);
-        dispose();
-//    
-    }else{
-    JOptionPane.showMessageDialog(this, "Usuario o contraseña invalidos");
-    }       
+        if (log.getUsuario() != null && log.getPass() != null) {
+            System.out.println("diferente del null " + log);
+            JOptionPane.showMessageDialog(this, "Biemvenido!!!");
+            Sistema sis = new Sistema();
+            sis.setVisible(true);
+            dispose();
 
+        } else {   //Esta linea no la toma
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña invalidos");
+        }
+
+    } else {
+        JOptionPane.showMessageDialog(this, "Los campos no pueden estar vacios ");
+    }
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(this, "El usuario o contraseña no son las correctas ");
+            limpiarLogin();
+        }
+        
+        
+        
+        
+    }
+
+private void limpiarLogin(){
+        jtUsuario.setText("");
+        jpContrasenia.setText("");
+        
 }
-}
-
 }

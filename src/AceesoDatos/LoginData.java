@@ -31,8 +31,8 @@ public class LoginData {
     }
     
     
-//     Login l;
-    public Login log(String usuario,String pass){
+
+    public Login logearse(String usuario,String pass){
         Login l = null;
        String sql = "Select * from usuarios where usuario = ? and pass = ?";
        try{
@@ -42,8 +42,6 @@ public class LoginData {
          ResultSet rs = ps.executeQuery();
           if(rs.next()){
               l = new Login();
-              l.setId(rs.getInt("idUsuario"));
-              l.setNombre(rs.getString("nombre"));
               l.setUsuario(rs.getString("usuario"));
               l.setPass(rs.getString("pass"));
           
@@ -55,5 +53,26 @@ public class LoginData {
        }
      return l;
     }
+     public void agregarUsuario(Login lo){ 
     
+    String sql = "INSERT INTO usuarios (usuario,pass) VALUES (?, ?)";
+    
+    try {
+            //preparedStatement envian la setencia anterior
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);//que me devuelva la lista de claves generadas
+            //Remplazo los ? por los datos del alumno que quiero enviar 
+              ps.setString(1,lo.getUsuario());
+              ps.setString(2,lo.getPass());
+            ps.executeUpdate();//ejecuta el preparedStatement armado anterior
+            ResultSet rs = ps.getGeneratedKeys();//Obtiene la clave,recibimos un resultset consulta
+            if (rs.next()) {
+//               
+                System.out.println("Exito");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+               System.out.println(ex.toString());
+            
+        }
+    }
 }
