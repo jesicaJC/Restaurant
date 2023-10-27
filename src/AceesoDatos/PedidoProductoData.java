@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,13 @@ import modelo.Mesa;
 import modelo.Pedido;
 import modelo.PedidoProducto;
 import modelo.Producto;
-
+/*SELECT pedidoproducto.id_pedido_producto,
+mesa.numero,
+pedido.nombre_mesero,
+producto.nombre_producto,producto.precio
+FROM pedidoproducto join mesa on(pedidoproducto.id_pedido_producto=mesa.id_mesa) 
+join pedido on (pedidoproducto.id_pedido=pedido.id_pedido) 
+join producto on (pedidoproducto.id_pedido_producto=producto.id_Producto);*/
 
 public class PedidoProductoData {
     
@@ -30,50 +37,115 @@ public class PedidoProductoData {
     }
     
     //METODOS
-    
-    public List<PedidoProducto> creandoPedidos(){
-      /*SELECT pedidoproducto.id_pedido_producto,
-mesa.numero,
-pedido.nombre_mesero,
-producto.nombre_producto,producto.precio
-FROM pedidoproducto join mesa on(pedidoproducto.id_pedido_producto=mesa.id_mesa) 
-join pedido on (pedidoproducto.id_pedido=pedido.id_pedido) 
-join producto on (pedidoproducto.id_pedido_producto=producto.id_Producto);*/
-      List<PedidoProducto>  pedido = new ArrayList<>();
-//      
-//       try {
-//           String sql = "SELECT pedido.id_mesa,pedido.nombre_mesero "
-//              + "FROM pedidoProducto,pedido,producto "
-//              + "WHERE pedidoProducto.id_pedido and pedidoProducto.id_producto = 1";
-//      
-//            PreparedStatement ps = con.prepareStatement(sql);
-//            ResultSet rs = ps.executeQuery();
-//             while (rs.next()) {
+
+   public List<Producto> listar(){
+      /*SELECT cantidad,producto.nombre_producto,producto.precio
+        FROM pedidoproducto join producto on (pedidoproducto.id_pedido_producto=producto.id_Producto);*/
+      List<Producto>  pedido = new ArrayList<>();
+       try {
+           String sql = "SELECT cantidad,nombre_mesero,precio, "
+              + "FROM pedidoproducto,producto "
+              + "WHERE pedidoproducto.id_pedido_producto = producto.id_Producto"
+                   + "and pedidoproducto.cantidad";
+      
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+             while (rs.next()) {
+                 Producto pp = new Producto(); 
+                pp.setNombreProducto(rs.getString("nombre_producto"));
+                pp.setPrecio(rs.getInt("precio"));
+                 pedido.add(pp);
+                 
+//                  PedidoProducto ped = new PedidoProducto();
+//                 ped.setCantidad(rs.getInt("cantidad"));
+//                 System.out.println(pedido.add(pp));
 //                 
-//                 Pedido p = new Pedido();
-//            p.setIdMesa(rs.getInt("id_mesa"));    
-//            p.setNombreMesero(rs.getString("nombre_mesero"));
-//            pedido.add(p);
-//            
-//                 Producto pr = new Producto();
-//                 pr.setNombreProducto(rs.getString("nombre_mesero"));
-//                 pr.setPrecio(rs.getInt("precio"));
-//                 pedido.add(pr);
-//                 
-//                 
-//             }
-//            ps.close();
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error al obtener : " + ex.getMessage());
-//        }
+             }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener : " + ex.getMessage());
+        }
         return pedido;
 //    
     }
     
+   public void creandoPedidos(){
+ /*Una mesa ocupada puede hacer uno o varios pedidos. 
+  Los pedidos tienen una lista de productos que, sumados todos los importes unitarios, se obtiene el monto del pedido.
+  Inicialmente están pendientes (0) o entregado/pagado (1). 
+  Una mesa puede tener entre sus pedidos algunos pagados y otros sin pagar.*/
+      
+    }  
     
+    public void agregarProductoAPedido(int idPedido, int idProducto,int cant){
+    /*Un método agregar producto, agrega un producto a un pedido (una lista de productos).
+    Quitar producto lo elimina o anula del pedido.*/
+         String sql = "INSERT INTO pedidoproducto (id_Pedido, id_Producto, cantidad) VALUES (?, ?, ?)";
+
+    try {
+            //preparedStatement envian la setencia anterior
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);//que me devuelva la lista de claves generadas
+            //Remplazo los ? por los datos 
+            ps.setInt(1,idPedido);
+            ps.setInt(2, idProducto);
+            ps.setInt(3, cant);
+         
+           
+            ps.executeUpdate();//ejecuta el preparedStatement armado anterior
+            ResultSet rs = ps.getGeneratedKeys();//Obtiene la clave,recibimos un resultset consulta
+            //ResultSet va a venir una especie de matriz con una sola columna(ID), con tantas filas como alumnados haya insertado
+            //en este caso solo enviamos un solo alumno y va a tener 1 sola fila.
+            if (rs.next()) {
+//                produ.setIdProducto(rs.getInt("idProducto"));//nos mandan por parametro un alumno con dni ,apellido etc, nosotros le devolvemos por referencia un ID
+                //el ID lo saco del resultSet getInt y el numero de columna osea el numero del id
+                System.out.println("Exito");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            ex.getMessage();
+        }
+    }
     
+
+    public  void eliminarProductoDelPedido(int id){
+    try {
+            String sql = "DELETE FROM pedidoproducto WHERE id_pedido_producto = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int fila = ps.executeUpdate();
+            if (fila == 1) {
+                System.out.println("Exito");
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+    }
     
+    //         ***LISTAR***
     
+    public List<PedidoProducto>listarVentas(){
+       List<PedidoProducto> ventas = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM pedidoproducto";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                PedidoProducto p = new PedidoProducto();
+                p.setIdPedidoProducto(rs.getInt("id_pedido_producto"));
+                p.setIdPedido(rs.getInt("id_pedido"));
+                p.setIdProducto(rs.getInt("id_producto"));
+                p.setCantidad(rs.getInt("cantidad"));
+                ventas.add(p);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            ex.getMessage();
+        }
+        return ventas;
+    }
+    
+   
     public List<Pedido> listarPedidoporMesero(String nombre){
       List<Pedido> pedido = new ArrayList<Pedido>();
       String sql = "SELECT * FROM pedido WHERE nombre_mesero = ?";
@@ -95,7 +167,7 @@ join producto on (pedidoproducto.id_pedido_producto=producto.id_Producto);*/
              }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al obtener : " + ex.getMessage());
+             ex.getMessage();
         }
         return pedido;
     }
@@ -124,7 +196,7 @@ join producto on (pedidoproducto.id_pedido_producto=producto.id_Producto);*/
              }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al obtener : " + ex.getMessage());
+          ex.getMessage();
         }
         return pedido;
     }
@@ -152,7 +224,7 @@ join producto on (pedidoproducto.id_pedido_producto=producto.id_Producto);*/
              }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al obtener : " + ex.getMessage());
+           ex.getMessage();
         }
         return pedido;
     }
@@ -179,7 +251,7 @@ join producto on (pedidoproducto.id_pedido_producto=producto.id_Producto);*/
              }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al obtener : " + ex.getMessage());
+            ex.getMessage();
         }
         return pedido;
     }
@@ -211,4 +283,10 @@ join producto on (pedidoproducto.id_pedido_producto=producto.id_Producto);*/
 //        }
 //        return ingresos;
 //    }
+
+   
+
+    
+
+    
 }

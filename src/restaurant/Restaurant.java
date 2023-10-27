@@ -2,7 +2,7 @@
 package restaurant;
 
 import AceesoDatos.*;
-import com.sun.corba.se.impl.ior.NewObjectKeyTemplateBase;
+
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -100,8 +100,6 @@ public class Restaurant {
 //        for (Pedido pe : pedata.listarPedido()) {
 ////            System.out.println(pe.toString());
 //        }
-        
-        
    
              //ELIMINAR PEDIDO
 //      pedata.borrarPedido(6);
@@ -125,7 +123,13 @@ public class Restaurant {
         System.out.println("   ");
         //LISTAR PEDIDOS X FECHA HORA
         
-     
+//          pp.listar();
+          
+          //AGREGAR UN PEDIDO A UN PRODUCTO
+          
+//          pp.agregarProductoAPedido( 3, 3, 2);
+////          
+//          pp.eliminarProductoDelPedido(2);
 
 //       PedidoProducto p = new PedidoProducto(1, 1, 2);
 //        System.out.println(p.toString());

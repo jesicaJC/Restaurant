@@ -119,4 +119,31 @@ public class PedidoData {
         return pedidos;
     }
     
+    public Pedido buscarPedido(int id){ 
+   Pedido pedido = null;
+        String sql = "SELECT  id_mesa, nombre_mesero, importe, cobro from pedido WHERE id_pedido = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                pedido = new Pedido();
+                pedido.setIdPedido(id);
+                pedido.setIdMesa(rs.getInt("id_mesa"));
+                pedido.setNombreMesero(rs.getString("nombre_mesero"));
+                pedido.setImporte(rs.getDouble("importe"));
+                pedido.setCobro(true);
+            } else {
+                System.out.println("No existe el pedido");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            ex.getMessage();
+        }
+        return pedido;
+    }
+    
+    
 }

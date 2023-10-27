@@ -15,6 +15,14 @@ public class Producto {
     public Producto() {
     }
 
+    public Producto(String nombreProducto, double precio, int stock) {
+        this.nombreProducto = nombreProducto;
+        this.precio = precio;
+        this.stock = stock;
+    }
+    
+    
+
     public Producto(int idProducto, String nombreProducto, double precio, int stock, boolean estado) {
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
@@ -71,8 +79,8 @@ public class Producto {
     }
 
     @Override
-    public String toString() {
-        return idProducto + ", " + nombreProducto + ", " + precio + ", " + stock + ", " + estado ;
+    public String toString() {//"["+idProducto + "]  " +
+        return  nombreProducto + ", " + precio + ", " + stock + ", " + estado ;
     }
     
     
