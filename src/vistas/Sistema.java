@@ -66,6 +66,7 @@ private DefaultTableModel modelo = new DefaultTableModel();
         jbotonMesas = new javax.swing.JButton();
         jbotonPedido = new javax.swing.JButton();
         jbPedidoProducto = new javax.swing.JButton();
+        jbEstadisticas = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
@@ -182,6 +183,14 @@ private DefaultTableModel modelo = new DefaultTableModel();
             }
         });
 
+        jbEstadisticas.setFont(new java.awt.Font("Courier New", 1, 14)); // NOI18N
+        jbEstadisticas.setText("Estadisticas");
+        jbEstadisticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEstadisticasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -197,6 +206,9 @@ private DefaultTableModel modelo = new DefaultTableModel();
             .addComponent(jbPedidoProducto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jbotonProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jbotonPedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jbEstadisticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +221,9 @@ private DefaultTableModel modelo = new DefaultTableModel();
                 .addComponent(jbotonMesas)
                 .addGap(18, 18, 18)
                 .addComponent(jbotonProducto)
-                .addGap(435, 435, 435)
+                .addGap(18, 18, 18)
+                .addComponent(jbEstadisticas)
+                .addGap(394, 394, 394)
                 .addComponent(jButton2)
                 .addGap(226, 226, 226)
                 .addComponent(jButton4)
@@ -1201,6 +1215,12 @@ private DefaultTableModel modelo = new DefaultTableModel();
         limpiarPedido();
     }//GEN-LAST:event_jbLimpiarPedidoActionPerformed
 
+    private void jbEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEstadisticasActionPerformed
+        Estadistica est = new Estadistica();
+            est.setVisible(true);
+            dispose();
+    }//GEN-LAST:event_jbEstadisticasActionPerformed
+
 
     
     
@@ -1288,6 +1308,7 @@ private DefaultTableModel modelo = new DefaultTableModel();
     private javax.swing.JButton jbEliminarMesa;
     private javax.swing.JButton jbEliminarP;
     private javax.swing.JButton jbEliminarPedido;
+    private javax.swing.JButton jbEstadisticas;
     private javax.swing.JButton jbLimpiarMesa;
     private javax.swing.JButton jbLimpiarP;
     private javax.swing.JButton jbLimpiarPedido;

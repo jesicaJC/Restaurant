@@ -163,8 +163,9 @@ public class PedidoProductoData {
             p.setImporte(rs.getInt("importe"));
             p.setCobro(rs.getBoolean("cobro"));
             pedido.add(p);
-                 System.out.println(p);
+                
              }
+              System.out.println("Exito");
             ps.close();
         } catch (SQLException ex) {
              ex.getMessage();
@@ -176,7 +177,8 @@ public class PedidoProductoData {
     
     public List<Pedido> listarIgresoTotalXFecha(Timestamp fechaHora){ //listar ingresos sumando totales de pedidos para una fecha en particular
         List<Pedido> pedido = new ArrayList<>();
-      String sql = "SELECT * FROM pedido WHERE fecha_hora = ?";
+        /*SELECT sum(importe) FROM `pedido` WHERE 2023-10-12;*/
+      String sql = "SELECT sum(importe) FROM pedido WHERE fecha_hora = ?";
       
        try {
             PreparedStatement ps = con.prepareStatement(sql);

@@ -119,7 +119,7 @@ public class Restaurant {
 //         pp.listarIgresoTotalXFecha(Timestamp.valueOf("2023-10-12 17:43:09"));
         System.out.println("   ");
         //LISTAR PEDIDOS COBRADO POR MESERO X DIA
-//        pp.listarPedidoCobroMeseroDia("Laura");
+//        pp.listarPedidoCobroMeseroDia("Paco");
         System.out.println("   ");
         //LISTAR PEDIDOS X FECHA HORA
         
