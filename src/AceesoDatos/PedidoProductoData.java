@@ -29,6 +29,7 @@ public class PedidoProductoData {
     private MesaData medata = new MesaData();
     private PedidoData pedata = new PedidoData();
     private Mesa mesa =new Mesa();
+    Producto prod = new Producto();
             
             
     public PedidoProductoData() { //constructor va inicializar la variable con
@@ -39,14 +40,21 @@ public class PedidoProductoData {
     //METODOS
 
    public List<Producto> listar(){
-      /*SELECT cantidad,producto.nombre_producto,producto.precio
-        FROM pedidoproducto join producto on (pedidoproducto.id_pedido_producto=producto.id_Producto);*/
-      List<Producto>  pedido = new ArrayList<>();
+     /* LOGRAR REALIZAR ESTA LISTA
+SELECT pedido.id_mesa,pedido.nombre_mesero,
+producto.nombre_producto,producto.precio,
+pedidoproducto.cantidad,pedido.importe
+FROM pedidoproducto
+INNER join producto
+on pedidoproducto.id_producto = producto.id_Producto 
+INNER join pedido
+on pedidoproducto.id_pedido = pedido.id_pedido;*/
+      List<Producto>pedido = new ArrayList<>();
        try {
-           String sql = "SELECT cantidad,nombre_mesero,precio, "
-              + "FROM pedidoproducto,producto "
-              + "WHERE pedidoproducto.id_pedido_producto = producto.id_Producto"
-                   + "and pedidoproducto.cantidad";
+           String sql = "SELECT producto.nombre_producto,producto.precio, cantidad"
+              + "FROM pedidoproducto ,producto"
+              + "WHERE pedido_producto.id_producto = producto.id_producto"
+                  ;
       
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -54,12 +62,14 @@ public class PedidoProductoData {
                  Producto pp = new Producto(); 
                 pp.setNombreProducto(rs.getString("nombre_producto"));
                 pp.setPrecio(rs.getInt("precio"));
+                
                  pedido.add(pp);
                  
 //                  PedidoProducto ped = new PedidoProducto();
+//                  ped.setIdProducto(prod.getNombreProducto());
 //                 ped.setCantidad(rs.getInt("cantidad"));
-//                 System.out.println(pedido.add(pp));
-//                 
+//               
+                 
              }
             ps.close();
         } catch (SQLException ex) {
@@ -122,7 +132,7 @@ public class PedidoProductoData {
         }
     }
     
-    //         ***LISTAR***
+    //                             ******* LISTAR *******
     
     public List<PedidoProducto>listarVentas(){
        List<PedidoProducto> ventas = new ArrayList<>();
@@ -146,7 +156,7 @@ public class PedidoProductoData {
     }
     
    
-    public List<Pedido> listarPedidoporMesero(String nombre){
+    public List<Pedido> listarPedidoporMesero(String nombre){ // Listar pedidos atendidos por mesero
       List<Pedido> pedido = new ArrayList<Pedido>();
       String sql = "SELECT * FROM pedido WHERE nombre_mesero = ?";
       
@@ -163,7 +173,6 @@ public class PedidoProductoData {
             p.setImporte(rs.getInt("importe"));
             p.setCobro(rs.getBoolean("cobro"));
             pedido.add(p);
-                
              }
               System.out.println("Exito");
             ps.close();
@@ -203,8 +212,31 @@ public class PedidoProductoData {
         return pedido;
     }
     
+    public void listarIgresoTotaL(){ //ALTERNATIVA (SUMA TOTAL INGRESOS)
+//        List<Pedido> pedido = new ArrayList<>();
+        /*SELECT sum(importe) FROM pedido;*/
+      String sql = "SELECT sum(importe) FROM pedido ";
+      
+       try {
+            PreparedStatement ps = con.prepareStatement(sql);
+//            ps.setTimestamp(1, fechaHora );
+            ResultSet rs = ps.executeQuery();
+            
+             while (rs.next()) {
+                 
+            String suma = rs.getString("sum(importe)");
+//                 System.out.println(suma);
+             }
+//            ps.close();
+        } catch (SQLException ex) {
+            
+          ex.getMessage();
+        }
+//        return suma;
+       
+    }
     
-    public List<Pedido> listarPedidoCobroMeseroDia(String nombre){//listar pedidos que cobro un mesero en el dia
+    public List<Pedido> listarPedidoCobroMeseroDia(String nombre){//listar pedidos que cobro un mesero en particular 
         List<Pedido> pedido = new ArrayList<>();
       String sql = "SELECT * FROM pedido WHERE nombre_mesero = ? and cobro = 1";
       
@@ -222,7 +254,6 @@ public class PedidoProductoData {
             p.setImporte(rs.getInt("importe"));
             p.setCobro(rs.getBoolean("cobro"));
             pedido.add(p);
-                 System.out.println(p);
              }
             ps.close();
         } catch (SQLException ex) {
@@ -257,37 +288,56 @@ public class PedidoProductoData {
         }
         return pedido;
     }
+    
+    public List<Pedido> listarPedidoMesa(int id){//ALTERNATIVA (Lista pedidos por mesa)
+        List<Pedido> pedido = new ArrayList<>();
+      String sql = "SELECT * FROM pedido WHERE id_mesa= ? ";
+      
+       try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+             while (rs.next()) {
+            Pedido p = new Pedido();
+            p.setIdPedido(rs.getInt("id_pedido"));
+            p.setIdMesa(rs.getInt("id_mesa"));    
+            p.setNombreMesero(rs.getString("nombre_mesero"));
+            p.setFechaHora(rs.getTimestamp("fecha_hora"));
+            p.setImporte(rs.getInt("importe"));
+            p.setCobro(rs.getBoolean("cobro"));
+            pedido.add(p);
+             }
+            ps.close();
+        } catch (SQLException ex) {
+            ex.getMessage();
+        }
+        return pedido;
+    }
 
-//     public double calcularSubtotal() {
-//        double subtotal = 0;
-//        for (Producto producto : this.productos) {
-//            subtotal += (producto.getCantidad()) * (producto.getPrecio());
-//        }
-//        return subtotal;
-//     }
-//     
-//   public double listarIngresosFecha(Timestamp fecha) {
-//        double ingresos = 0;
-//        for (Pedido pedido : this.pedidos) {
-//            if (pedido.getFechaHora().equals(fecha) && pedido.isCobrada()== 1) {
-//                ingresos += pedido.calcularSubtotal();
-//            }
-//        }
-//        return ingresos;
-//    }
-//
-//    public double listarIngresosMeseroDia(String mesero, Date fecha) {
-//        double ingresos = 0;
-//        for (Pedido pedido : this.pedidos) {
-//            if (pedido.getNombreMesero().equals(mesero) && pedido.getFechaHora().equals(fecha) && pedido.isCobrada()== 1) {
-//                ingresos += pedido.calcularSubtotal();
-//            }
-//        }
-//        return ingresos;
-//    }
-
-   
-
+ public List<Pedido> listarPedidoTotal() {
+        List<Pedido> pedidos = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM pedido";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pedido p = new Pedido();
+                p.setIdPedido(rs.getInt("id_pedido"));
+                p.setIdMesa(rs.getInt("id_mesa"));
+                p.setNombreMesero(rs.getString("nombre_mesero"));
+                p.setFechaHora(rs.getTimestamp("fecha_hora"));
+                p.setImporte(rs.getDouble("importe"));
+                p.setCobro(rs.getBoolean("cobro"));
+                pedidos.add(p);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla pedido: " + ex.getMessage());
+        }
+        return pedidos;
+    }
+    
     
 
     

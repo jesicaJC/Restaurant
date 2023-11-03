@@ -80,7 +80,7 @@ public class Producto {
 
     @Override
     public String toString() {//"["+idProducto + "]  " +
-        return  nombreProducto + ", " + precio + ", " + stock + ", " + estado ;
+        return "["+idProducto + "]  " + nombreProducto + ", " + precio + ", " + stock + ", " + estado ;
     }
     
     

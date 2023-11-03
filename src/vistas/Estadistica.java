@@ -1,13 +1,19 @@
 
 package vistas;
 
+import AceesoDatos.Conexion;
 import AceesoDatos.PedidoData;
 import AceesoDatos.PedidoProductoData;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Pedido;
+import modelo.PedidoProducto;
 
 
 public class Estadistica extends javax.swing.JFrame {
@@ -15,6 +21,8 @@ public class Estadistica extends javax.swing.JFrame {
     PedidoData pedata = new PedidoData();
     PedidoProductoData ppd = new PedidoProductoData();
     Pedido pedido = new Pedido();
+    PedidoProducto pediprodu = new PedidoProducto();
+    private Connection con = null; 
     /**
      * Creates new form Estadistica
      */
@@ -22,6 +30,7 @@ public class Estadistica extends javax.swing.JFrame {
         initComponents();
          this.setLocationRelativeTo(null);
          armarCabecera();
+         
     }
 
     /**
@@ -106,11 +115,11 @@ public class Estadistica extends javax.swing.JFrame {
                 .addGap(97, 97, 97)
                 .addComponent(jToggleButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(27, 27, 27)
                 .addComponent(jButton2)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(jbPedidosPorMesa)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jbVover)
                 .addGap(21, 21, 21))
@@ -158,32 +167,49 @@ public class Estadistica extends javax.swing.JFrame {
         String nombre=JOptionPane.showInputDialog("Ingrese el nombre del mesero: ");     
         borrarFilasPedido();
             for(Pedido p:ppd.listarPedidoporMesero(nombre)){
-                modelo.addRow(new Object[]{p.getIdPedido(),p.getIdMesa(),p.getNombreMesero(),p.getFechaHora(),p.getImporte(),p.isCobro()});
+                modelo.addRow(new Object[]{p.getIdMesa(),p.getNombreMesero(),p.getFechaHora(),p.getImporte(),p.isCobro()});
+                                      //p.getIdPedido(),
             }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Timestamp fechaHora=Timestamp.valueOf(JOptionPane.showInputDialog("Ingrese la fecha a buscar: "));
+
         borrarFilasPedido();
-            for(Pedido p: ppd.listarIgresoTotalXFecha(fechaHora)){
-                modelo.addRow(new Object[]{p.getIdPedido(),p.getIdMesa(),p.getNombreMesero(),p.getFechaHora(),p.getImporte(),p.isCobro()});
-            }
+        llenarTablaPedidoTotal();
+        con = Conexion.getConexion();
+        String sql = "SELECT sum(importe) FROM pedido where cobro = 1 "; //Suma solo los cobrados
+      
+       try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+             while (rs.next()) {
+            String suma = rs.getString("sum(importe)");
+            JOptionPane.showMessageDialog(null, "Suma total de ingresos Cobrados: " +suma);
+             }
+//            
+        } catch (SQLException ex) {
+          ex.getMessage();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        String nombre=JOptionPane.showInputDialog("Ingrese el nombre del mesero: ");
        borrarFilasPedido();
             for(Pedido p: ppd.listarPedidoCobroMeseroDia(nombre)){
-                modelo.addRow(new Object[]{p.getIdPedido(),p.getIdMesa(),p.getNombreMesero(),p.getFechaHora(),p.getImporte(),p.isCobro()});
+                modelo.addRow(new Object[]{p.getIdMesa(),p.getNombreMesero(),p.getFechaHora(),p.getImporte(),p.isCobro()});
+                                   //p.getIdPedido(),
             }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jbPedidosPorMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPedidosPorMesaActionPerformed
-        Timestamp fechaHora=Timestamp.valueOf(JOptionPane.showInputDialog("Ingrese la fecha a buscar: "));
+//        Timestamp fechaHora=Timestamp.valueOf(JOptionPane.showInputDialog("Ingrese la fecha a buscar: "));
+        int mesa= Integer.parseInt(JOptionPane.showInputDialog("Ingrese numero de mesa a buscar: "));
         borrarFilasPedido();
-            for(Pedido p: ppd.listarPedidoFechaHora(fechaHora)){
-                modelo.addRow(new Object[]{p.getIdPedido(),p.getIdMesa(),p.getNombreMesero(),p.getFechaHora(),p.getImporte(),p.isCobro()});
-            }
+            for(Pedido p: ppd.listarPedidoMesa(mesa)){
+                modelo.addRow(new Object[]{p.getIdMesa(),p.getNombreMesero(),p.getFechaHora(),p.getImporte(),p.isCobro()});
+                                      //p.getIdPedido(),
+            }                        
         
     }//GEN-LAST:event_jbPedidosPorMesaActionPerformed
 
@@ -242,7 +268,7 @@ public class Estadistica extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 public void armarCabecera(){
    ArrayList<Object>titulo = new ArrayList();
- titulo.add("ID");
+// titulo.add("ID");
  titulo.add("ID Mesa");
  titulo.add("Nombre Mesero");
  titulo.add("Fecha");
@@ -260,5 +286,10 @@ int filas=jTablaListas.getRowCount()-1;
   }
 }
 
-
+private void llenarTablaPedidoTotal(){
+            borrarFilasPedido();
+            for(Pedido p:ppd.listarPedidoTotal()){
+                modelo.addRow(new Object[]{p.getIdPedido(),p.getIdMesa(),p.getNombreMesero(),p.getFechaHora(),p.getImporte(),p.isCobro()});
+            }
+    }
 }

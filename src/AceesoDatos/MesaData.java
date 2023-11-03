@@ -35,11 +35,11 @@ public void agregarMesa(Mesa me){
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Mesa añadida.");
+                System.out.println("Exito");
             }
             ps.close();
         } catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla mesa " + ex.getMessage());
+             ex.getMessage();
         }
     }
 
@@ -56,12 +56,12 @@ public void modificarMesa(Mesa me){
             
             int exito = ps.executeUpdate();//execute devuelve en un entero con la cantidad de filas afectadas
             if (exito == 1) { //va a devolver 1 porque el id es unico
-                JOptionPane.showMessageDialog(null, "La mesa ha sido modificada.");
+                System.out.println("Mesa modificada");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encuentra la mesa.");
+                System.out.println("No se encuentra la mesa");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla mesa : " + ex.getMessage());
+            ex.getMessage();
         }
       }
 

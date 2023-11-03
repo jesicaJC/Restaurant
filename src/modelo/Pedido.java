@@ -2,8 +2,6 @@
 package modelo;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  *
@@ -96,7 +94,7 @@ public class Pedido {
 
     @Override
     public String toString() {//"["+idPedido+
-        return  " Mesa: " + idMesa + " | Mesero: " + nombreMesero + " | Fecha Hora: " + fechaHora + " | Importe: " + importe + " | Cobro: " + cobro;
+        return "["+idPedido+"] Mesa: " + idMesa + " | Mesero: " + nombreMesero + " | Fecha Hora: " + fechaHora + " | Importe: " + importe + " | Cobro: " + cobro;
     }
    
    

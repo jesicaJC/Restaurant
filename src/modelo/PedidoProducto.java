@@ -65,7 +65,7 @@ public class PedidoProducto {
 
     @Override
     public String toString() {
-        return "PedidoProducto{" + "idPedidoProducto=" + idPedidoProducto + ", idPedido=" + idPedido + ", idProducto=" + idProducto + ", cantidad=" + cantidad + '}';
+        return "[" + idPedidoProducto + "]  [Pedido Nº: " + idPedido + "] [Producto Nº: " + idProducto + "] [cantidad: " + cantidad+"]";
     }
      
     

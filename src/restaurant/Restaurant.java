@@ -23,7 +23,7 @@ public class Restaurant {
 //         VistaLogin vl = new VistaLogin();
 //         vl.setVisible(true);
 //         vl.setLocationRelativeTo(null);     
-        
+//        
         
        //Agregar productos   
 //Producto producto1 = new Producto("Pizza", 2000, 10, true);
@@ -117,13 +117,15 @@ public class Restaurant {
          System.out.println("   ");
          //LISTAR PEDIDOS POR INGRESO TOTAL
 //         pp.listarIgresoTotalXFecha(Timestamp.valueOf("2023-10-12 17:43:09"));
+
         System.out.println("   ");
         //LISTAR PEDIDOS COBRADO POR MESERO X DIA
 //        pp.listarPedidoCobroMeseroDia("Paco");
         System.out.println("   ");
         //LISTAR PEDIDOS X FECHA HORA
-        
-//          pp.listar();
+//        pp.listarPedidoMesa(2);
+        pp.listarIgresoTotaL();
+          
           
           //AGREGAR UN PEDIDO A UN PRODUCTO
           
@@ -131,6 +133,7 @@ public class Restaurant {
 ////          
 //          pp.eliminarProductoDelPedido(2);
 
+         pp.listar();
 //       PedidoProducto p = new PedidoProducto(1, 1, 2);
 //        System.out.println(p.toString());
     

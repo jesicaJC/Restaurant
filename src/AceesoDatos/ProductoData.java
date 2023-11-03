@@ -78,9 +78,9 @@ public class ProductoData { //ABM
             ps.setInt(5, produ.getIdProducto());
             int exito = ps.executeUpdate();//execute devuelve en un entero con la cantidad de filas afectadas
             if (exito == 1) { //va a devolver 1 porque el id es unico
-                JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+                System.out.println("Actualizado");
             } else {
-                JOptionPane.showMessageDialog(null, "El producto no existe");
+                System.out.println("No existe");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla producto: " + ex.getMessage());
@@ -150,7 +150,7 @@ Producto produ = null;
  public List<Producto> listarProducto() {
         List<Producto> productos = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM producto WHERE estado = 1";
+            String sql = "SELECT * FROM producto WHERE estado = 1 order by nombre_producto asc";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
